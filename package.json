@@ -1,0 +1,82 @@
+{
+  "name": "node-cli-template",
+  "description": "Minimum configuration template for publishing cli packages to npm.",
+  "version": "0.0.0",
+  "author": "ryohidaka <39184410+ryohidaka@users.noreply.github.com>",
+  "bin": {
+    "node-cli-template": "./bin/run.js"
+  },
+  "bugs": "https://github.com/ryohidaka/node-cli-template/issues",
+  "dependencies": {
+    "@oclif/core": "^3",
+    "@oclif/plugin-help": "^6",
+    "@oclif/plugin-plugins": "^5"
+  },
+  "devDependencies": {
+    "@oclif/prettier-config": "^0.2.1",
+    "@oclif/test": "^3",
+    "@types/chai": "^4",
+    "@types/mocha": "^10",
+    "@types/node": "^20",
+    "chai": "^4",
+    "eslint": "^8",
+    "eslint-config-oclif": "^5",
+    "eslint-config-oclif-typescript": "^3",
+    "eslint-config-prettier": "^9",
+    "husky": "^9.0.11",
+    "mocha": "^10",
+    "oclif": "^4",
+    "prettier": "^3.2.5",
+    "shx": "^0.3.3",
+    "ts-node": "^10",
+    "typedoc": "^0.25.13",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "/bin",
+    "/dist",
+    "/oclif.manifest.json"
+  ],
+  "homepage": "https://github.com/ryohidaka/node-cli-template#readme",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "type": "module",
+  "oclif": {
+    "bin": "node-cli-template",
+    "dirname": "node-cli-template",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-plugins"
+    ],
+    "topicSeparator": " ",
+    "topics": {
+      "hello": {
+        "description": "Say hello to the world and others"
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryohidaka/node-cli-template"
+  },
+  "scripts": {
+    "build": "shx rm -rf dist && tsc -b",
+    "lint": "eslint . --ext .ts",
+    "prepare": "husky install",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "posttest": "npm run lint",
+    "prepack": "oclif manifest && oclif readme",
+    "test": "mocha --forbid-only \"test/**/*.test.ts\"",
+    "version": "oclif readme && git add README.md",
+    "format": "prettier . --write",
+    "docs": "typedoc"
+  },
+  "types": "dist/index.d.ts"
+}

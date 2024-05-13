@@ -1,0 +1,10 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "disableSources": true,
+  "entryPoints": ["./src"],
+  "hideGenerator": true,
+  "navigationLinks": {
+    "GitHub": "https://github.com/%AUTHOR%/%NAME%",
+    "npm": "https://www.npmjs.com/package/%NAME%"
+  }
+}

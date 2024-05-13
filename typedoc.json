@@ -1,0 +1,10 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "disableSources": true,
+  "entryPoints": ["./src"],
+  "hideGenerator": true,
+  "navigationLinks": {
+    "GitHub": "https://github.com/ryohidaka/node-cli-template",
+    "npm": "https://www.npmjs.com/package/node-cli-template"
+  }
+}
