@@ -4,7 +4,7 @@
   "entryPoints": ["./src"],
   "hideGenerator": true,
   "navigationLinks": {
-    "GitHub": "https://github.com/ryohidaka/node-cli-template",
-    "npm": "https://www.npmjs.com/package/node-cli-template"
+    "GitHub": "https://github.com/ryohidaka/zenn2press",
+    "npm": "https://www.npmjs.com/package/zenn2press"
   }
 }

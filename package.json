@@ -1,8 +1,8 @@
 {
-  "name": "node-cli-template",
-  "description": "Minimum configuration template for publishing cli packages to npm.",
+  "name": "zenn2press",
+  "description": "",
   "version": "0.0.0",
-  "author": "ryohidaka <39184410+ryohidaka@users.noreply.github.com>",
+  "author": "ryohidaka",
   "bin": {
     "node-cli-template": "./bin/run.js"
   },
@@ -40,7 +40,7 @@
     "/dist",
     "/oclif.manifest.json"
   ],
-  "homepage": "https://github.com/ryohidaka/node-cli-template#readme",
+  "homepage": "https://github.com/ryohidaka/zenn2press#readme",
   "keywords": [
     "oclif"
   ],
@@ -64,7 +64,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ryohidaka/node-cli-template"
+    "url": "git+https://github.com/ryohidaka/zenn2press.git"
   },
   "scripts": {
     "build": "shx rm -rf dist && tsc -b",
