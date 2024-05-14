@@ -4,7 +4,7 @@
 ![build](https://github.com/ryohidaka/zenn2press/workflows/tests/badge.svg)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-
+Convert Zenn content format to VitePress.
 
 <!-- toc -->
 

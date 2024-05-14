@@ -1,12 +1,12 @@
 {
   "name": "zenn2press",
-  "description": "",
+  "description": "Convert Zenn content format to VitePress.",
   "version": "0.0.0",
-  "author": "ryohidaka",
+  "author": "ryohidaka <39184410+ryohidaka@users.noreply.github.com>",
   "bin": {
-    "node-cli-template": "./bin/run.js"
+    "zenn2press": "./bin/run.js"
   },
-  "bugs": "https://github.com/ryohidaka/node-cli-template/issues",
+  "bugs": "https://github.com/ryohidaka/zenn2press/issues",
   "dependencies": {
     "@oclif/core": "^3",
     "@oclif/plugin-help": "^6",
@@ -42,14 +42,16 @@
   ],
   "homepage": "https://github.com/ryohidaka/zenn2press#readme",
   "keywords": [
-    "oclif"
+    "oclif",
+    "zenn",
+    "vitepress"
   ],
   "license": "MIT",
   "main": "dist/index.js",
   "type": "module",
   "oclif": {
-    "bin": "node-cli-template",
-    "dirname": "node-cli-template",
+    "bin": "zenn2press",
+    "dirname": "zenn2press",
     "commands": "./dist/commands",
     "plugins": [
       "@oclif/plugin-help",
@@ -57,8 +59,8 @@
     ],
     "topicSeparator": " ",
     "topics": {
-      "hello": {
-        "description": "Say hello to the world and others"
+      "apps": {
+        "description": "Convert Zenn content format to VitePress."
       }
     }
   },
@@ -68,7 +70,7 @@
   },
   "scripts": {
     "build": "shx rm -rf dist && tsc -b",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint . --ext .ts --fix --quiet",
     "prepare": "husky install",
     "postpack": "shx rm -f oclif.manifest.json",
     "posttest": "npm run lint",
