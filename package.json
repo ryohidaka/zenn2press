@@ -52,7 +52,10 @@
   "oclif": {
     "bin": "zenn2press",
     "dirname": "zenn2press",
-    "commands": "./dist/commands",
+    "commands": {
+      "strategy": "single",
+      "target": "./dist/index.js"
+    },
     "plugins": [
       "@oclif/plugin-help",
       "@oclif/plugin-plugins"

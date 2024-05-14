@@ -1,1 +1,1 @@
-export {run} from '@oclif/core'
+export {Zenn2Press as default} from './zenn-2-press.js'
