@@ -1,6 +1,7 @@
 import {Command, Flags} from '@oclif/core'
 
 import {DESCRIPTION} from './constants.js'
+import {copyImages} from './utils/image.js'
 import {copyMarkdownFiles} from './utils/markdown.js'
 
 /**
@@ -15,28 +16,39 @@ export class Zenn2Press extends Command {
         'The VitePress directory path (e.g. docs/entries) where you want to place the markdown for the articles',
       required: true,
     }),
+    destImagesDir: Flags.string({
+      char: 'm',
+      description: 'The VitePress directory path (e.g. public) where the image will be placed',
+      required: true,
+    }),
     srcDir: Flags.string({char: 's', description: 'Path of the root directory of Zenn content.', required: true}),
   }
 
   // The run method is the entry point of the command
   async run(): Promise<void> {
     const {flags} = await this.parse(Zenn2Press)
-    const {destDir, srcDir} = flags
+    const {destDir, destImagesDir, srcDir} = flags
 
     const srcArticlesDir = `${srcDir}/articles`
     const destArticlesDir = destDir
+    const srcImagesDir = `${srcDir}/images`
 
     console.log(`
 Property
 
   Source:
     - Articles: ${srcArticlesDir}
+    - Images: ${srcImagesDir}
 
   Output:
     - Articles: ${destArticlesDir}
+    - Images: ${destImagesDir}
     `)
 
     // Copy markdown files from srcDir to destDir after conversion
     await copyMarkdownFiles(srcArticlesDir, destArticlesDir)
+
+    // Copy images from srcDir to destDir
+    await copyImages(srcImagesDir, destImagesDir)
   }
 }
