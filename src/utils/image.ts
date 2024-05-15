@@ -56,6 +56,8 @@ const copyFiles = async (filePaths: string[], srcDir: string, destDir: string) =
   logger.bold('Copy Images:')
   logger.info('Starting to copy image files...')
 
+  const bar = logger.progressBar.create(filePaths.length)
+
   // For each file path, copy the file to the target directory
   for (const file of filePaths) {
     const fileName = path.relative(srcDir, file)
@@ -65,7 +67,10 @@ const copyFiles = async (filePaths: string[], srcDir: string, destDir: string) =
     fs.mkdirSync(path.dirname(targetPath), {recursive: true})
 
     fs.copyFileSync(file, targetPath)
+    bar.increment({filename: file})
   }
+
+  bar.stop()
 
   logger.success('Copying of Markdown files is complete.')
 }

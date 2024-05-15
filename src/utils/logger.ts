@@ -1,4 +1,5 @@
 import chalk from 'chalk'
+import {Presets, SingleBar} from 'cli-progress'
 
 type LoggerFunction = (msg: string) => void
 
@@ -6,6 +7,9 @@ interface ILogger {
   bold: LoggerFunction
   error: LoggerFunction
   info: LoggerFunction
+  progressBar: {
+    create: (total: number) => SingleBar
+  }
   success: LoggerFunction
   warn: LoggerFunction
 }
@@ -25,11 +29,34 @@ const createLogger =
     logFunction(formattedMsg)
   }
 
+/**
+ * Function to create a progress bar with a given total value
+ * @param total - The total value that the progress bar should represent.
+ * @param startValue - The initial value of the progress bar. Default is 0.
+ * @returns {SingleBar} - Returns an instance of SingleBar representing the progress bar.
+ */
+const createProgressBar = (total: number, startValue: number = 0): SingleBar => {
+  const bar = new SingleBar(
+    {
+      format: ' {bar} | {filename} | {value}/{total}',
+      hideCursor: true,
+    },
+    Presets.shades_classic,
+  )
+
+  bar.start(total, startValue)
+
+  return bar
+}
+
 // Logger object with error, info, and success functions
 const logger: ILogger = {
   bold: createLogger(console.log, chalk.bold),
   error: createLogger(console.error, chalk.red),
   info: createLogger(console.log),
+  progressBar: {
+    create: createProgressBar,
+  },
   success: createLogger(console.log, chalk.greenBright),
   warn: createLogger(console.log, chalk.yellow),
 }

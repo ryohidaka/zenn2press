@@ -28,10 +28,15 @@ export const copyMarkdownFiles = async (srcDir: string, destDir: string, configF
   // Read the configuration file for frontmatter, if provided
   const frontmatterConfig = readConfigFile(configFile)
 
+  const bar = logger.progressBar.create(markdownFiles.length)
+
   for (const file of markdownFiles) {
     // Copy each Markdown file from the source directory to the dest directory.
     copyMarkdownFile(srcDir, destDir, file, frontmatterConfig)
+    bar.increment({filename: file})
   }
+
+  bar.stop()
 
   logger.success('Copying of Markdown files is complete.')
 }
