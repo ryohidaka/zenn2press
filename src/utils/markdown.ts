@@ -2,13 +2,19 @@ import matter from 'gray-matter'
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 
+import {readConfigFile} from './config.js'
+
+/* eslint @typescript-eslint/no-explicit-any: 0 */
+export type Config = {[key: string]: any}
+
 /**
  * Asynchronously copies Markdown files.
  *
  * @param {string} srcDir - The directory containing the source Markdown files.
  * @param {string} destDir - The directory where the copied files will be saved.
+ * @param {string} [configFile] - The optional configuration file for frontmatter.
  */
-export const copyMarkdownFiles = async (srcDir: string, destDir: string) => {
+export const copyMarkdownFiles = async (srcDir: string, destDir: string, configFile?: string) => {
   console.log('Starting to copy Markdown files...')
 
   // Read all files in the source directory
@@ -17,9 +23,12 @@ export const copyMarkdownFiles = async (srcDir: string, destDir: string) => {
   // Filter the Markdown files
   const markdownFiles = filterMarkdownFiles(files)
 
+  // Read the configuration file for frontmatter, if provided
+  const frontmatterConfig = readConfigFile(configFile)
+
   for (const file of markdownFiles) {
     // Copy each Markdown file from the source directory to the dest directory.
-    copyMarkdownFile(srcDir, destDir, file)
+    copyMarkdownFile(srcDir, destDir, file, frontmatterConfig)
   }
 
   console.log('Copying of Markdown files is complete.')
@@ -47,7 +56,7 @@ const filterMarkdownFiles = (files: string[]): string[] => {
  * @param {string} destDir - The directory where the copied files will be saved.
  * @param {string} file - The name of the file to be copied.
  */
-const copyMarkdownFile = (srcDir: string, destDir: string, file: string) => {
+const copyMarkdownFile = (srcDir: string, destDir: string, file: string, frontmatterConfig?: Config) => {
   // Construct the full path of the file in the source directory
   const filePath = path.join(srcDir, file)
 
@@ -57,17 +66,19 @@ const copyMarkdownFile = (srcDir: string, destDir: string, file: string) => {
   // Parse the frontmatter of the file
   const {content, data} = matter(fileContent)
 
+  const mergedData = {...data, ...frontmatterConfig}
+
   // Check if the file has a title in its frontmatter
-  if (!data.title) {
+  if (!mergedData.title) {
     console.warn(`No title found in the frontmatter of ${file}`)
     return
   }
 
   // Update the content of the file by adding the title at the beginning
-  const updatedContent = `# ${data.title}\n${content}`
+  const updatedContent = `# ${mergedData.title}\n${content}`
 
   // Stringify the updated content and the frontmatter data
-  const newFileContent = matter.stringify(updatedContent, data)
+  const newFileContent = matter.stringify(updatedContent, mergedData)
 
   // Construct the full path of the file in the dest directory
   const outputFilePath = path.join(destDir, file)

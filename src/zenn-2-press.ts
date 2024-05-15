@@ -10,6 +10,7 @@ import {copyMarkdownFiles} from './utils/markdown.js'
 export class Zenn2Press extends Command {
   static description = DESCRIPTION
   static flags = {
+    configFile: Flags.string({char: 'c', description: 'Configuration File Paths', required: false}),
     destDir: Flags.string({
       char: 'd',
       description:
@@ -27,7 +28,7 @@ export class Zenn2Press extends Command {
   // The run method is the entry point of the command
   async run(): Promise<void> {
     const {flags} = await this.parse(Zenn2Press)
-    const {destDir, destImagesDir, srcDir} = flags
+    const {configFile, destDir, destImagesDir, srcDir} = flags
 
     const srcArticlesDir = `${srcDir}/articles`
     const destArticlesDir = destDir
@@ -43,6 +44,8 @@ Property
   Output:
     - Articles: ${destArticlesDir}
     - Images: ${destImagesDir}
+
+  Config: ${configFile ?? 'None'}
     `)
 
     // Copy markdown files from srcDir to destDir after conversion
