@@ -14,16 +14,24 @@ export type Config = {[key: string]: any}
  * @param {string} srcDir - The directory containing the source Markdown files.
  * @param {string} destDir - The directory where the copied files will be saved.
  * @param {string} [configFile] - The optional configuration file for frontmatter.
+ * @param {string[]} [include] - The optional list of files to include in the processing.
+ * @param {string[]} [exclude] - The optional list of files to exclude from the processing.
  */
-export const copyMarkdownFiles = async (srcDir: string, destDir: string, configFile?: string) => {
+export const copyMarkdownFiles = async (
+  srcDir: string,
+  destDir: string,
+  configFile?: string,
+  include?: string[],
+  exclude?: string[],
+) => {
   logger.bold('Copy Markdown:')
   logger.info('Starting to copy Markdown files...')
 
   // Read all files in the source directory
   const files = fs.readdirSync(srcDir)
 
-  // Filter the Markdown files
-  const markdownFiles = filterMarkdownFiles(files)
+  // Filter the Markdown files based on the include and exclude lists
+  const markdownFiles = filterMarkdownFiles(files, include, exclude)
 
   // Read the configuration file for frontmatter, if provided
   const frontmatterConfig = readConfigFile(configFile)
@@ -45,11 +53,23 @@ export const copyMarkdownFiles = async (srcDir: string, destDir: string, configF
  * Filters and returns only the Markdown files from a list of files.
  *
  * @param {string[]} files - An array of file names or paths.
+ * @param {string[]} [include] - The optional list of files to include in the processing.
+ * @param {string[]} [exclude] - The optional list of files to exclude from the processing.
  * @returns {string[]} An array containing only the Markdown files.
  */
-const filterMarkdownFiles = (files: string[]): string[] => {
+const filterMarkdownFiles = (files: string[], include?: string[], exclude?: string[]): string[] => {
   // Use the 'filter' method to filter out non-Markdown files
-  const markdownFiles = files.filter((file) => path.extname(file) === '.md')
+  let markdownFiles = files.filter((file) => path.extname(file) === '.md')
+
+  // If there are directories or files to include, filter the entries to only include those
+  if (include && include.length > 0) {
+    markdownFiles = markdownFiles.filter((file) => addMdExt(include).includes(file))
+  }
+
+  // If there are directories or files to exclude, filter the entries to exclude those
+  if (exclude && exclude.length > 0) {
+    markdownFiles = markdownFiles.filter((file) => !addMdExt(exclude).includes(file))
+  }
 
   // Return the array of Markdown files
   return markdownFiles
@@ -93,3 +113,20 @@ const copyMarkdownFile = (srcDir: string, destDir: string, file: string, frontma
   // Write the new content into the file in the dest directory
   fs.writeFileSync(outputFilePath, newFileContent, 'utf8')
 }
+
+/**
+ * This function adds a '.md' extension to a given paths if it doesn't already have one.
+ * @param {string} filename - The name of the file.
+ * @returns {string[]} - The paths with a '.md' extension, or the original path if it already had a '.md' extension.
+ */
+const addMdExt = (paths: string[]): string[] =>
+  paths.map((path) => {
+    // Check if the path ends with '.md'
+    if (!path.endsWith('.md')) {
+      // If not, append '.md' to the path
+      return path + '.md'
+    }
+
+    // If the path already ends with '.md', return the original path
+    return path
+  })

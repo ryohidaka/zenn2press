@@ -25,6 +25,18 @@ export class Zenn2Press extends Command {
       description: 'The VitePress directory path (e.g. public) where the image will be placed',
       required: true,
     }),
+    exclude: Flags.string({
+      char: 'e',
+      description: 'File name to exclude',
+      multiple: true,
+      required: false,
+    }),
+    include: Flags.string({
+      char: 'i',
+      description: 'File name to include',
+      multiple: true,
+      required: false,
+    }),
     srcDir: Flags.string({char: 's', description: 'Path of the root directory of Zenn content.', required: true}),
   }
 
@@ -62,7 +74,7 @@ export class Zenn2Press extends Command {
     await splash()
 
     const {flags} = await this.parse(Zenn2Press)
-    const {configFile, destDir, destImagesDir, srcDir} = flags
+    const {configFile, destDir, destImagesDir, exclude, include, srcDir} = flags
 
     const srcArticlesDir = `${srcDir}/articles`
     const destArticlesDir = destDir
@@ -72,12 +84,12 @@ export class Zenn2Press extends Command {
     this.logProperties(srcArticlesDir, srcImagesDir, destArticlesDir, destImagesDir, configFile)
 
     // Copy markdown files from srcDir to destDir after conversion
-    await copyMarkdownFiles(srcArticlesDir, destArticlesDir, configFile)
+    await copyMarkdownFiles(srcArticlesDir, destArticlesDir, configFile, include, exclude)
 
     logger.info('\n')
 
     // Copy images from srcDir to destDir
-    await copyImages(srcImagesDir, destImagesDir)
+    await copyImages(srcImagesDir, destImagesDir, include, exclude)
 
     logger.info('\n')
     logger.success(`Completed`)

@@ -8,11 +8,13 @@ import logger from './logger.js'
  *
  * @param {string} srcDir - The source directory path.
  * @param {string} destDir - The destination directory path.
+ * @param {string[]} [include] - The optional list of files to include in the processing.
+ * @param {string[]} [exclude] - The optional list of files to exclude from the processing.
  * @returns {void}
  */
-export const copyImages = async (srcDir: string, destDir: string) => {
+export const copyImages = async (srcDir: string, destDir: string, include?: string[], exclude?: string[]) => {
   // Get all file paths from the source directory
-  const filePaths = await getFilePaths(srcDir)
+  const filePaths = await getFilePaths(srcDir, include, exclude)
   // Copy each file to the destination directory
   await copyFiles(filePaths, srcDir, destDir)
 }
@@ -21,11 +23,23 @@ export const copyImages = async (srcDir: string, destDir: string) => {
  * This function gets all file paths in a directory.
  *
  * @param {string} dirPath - The directory path.
+ * @param {string[]} [include] - The optional list of files to include in the processing.
+ * @param {string[]} [exclude] - The optional list of files to exclude from the processing.
  * @returns {Promise<string[]>} - The file paths.
  */
-const getFilePaths = async (dirPath: string): Promise<string[]> => {
+const getFilePaths = async (dirPath: string, include?: string[], exclude?: string[]): Promise<string[]> => {
   // Read the directory entries
-  const entries = await fs.promises.readdir(dirPath, {withFileTypes: true})
+  let entries = await fs.promises.readdir(dirPath, {withFileTypes: true})
+
+  // If there are directories or files to include, filter the entries to only include those
+  if (include && include.length > 0) {
+    entries = entries.filter((dir) => include.includes(dir.name))
+  }
+
+  // If there are directories or files to exclude, filter the entries to exclude those
+  if (exclude && exclude.length > 0) {
+    entries = entries.filter((dir) => !exclude.includes(dir.name))
+  }
 
   // Map each entry to its full path
   const filePaths = await Promise.all(
