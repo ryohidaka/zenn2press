@@ -5,6 +5,7 @@ import {DESCRIPTION} from './constants.js'
 import {copyImages} from './utils/image.js'
 import logger from './utils/logger.js'
 import {copyMarkdownFiles} from './utils/markdown.js'
+import {splash} from './utils/splash.js'
 
 /**
  * Zenn2Press is a command that copies markdown files from Zenn to VitePress.
@@ -57,6 +58,9 @@ export class Zenn2Press extends Command {
 
   // The run method is the entry point of the command
   async run(): Promise<void> {
+    // Output welcome message to the console
+    await splash()
+
     const {flags} = await this.parse(Zenn2Press)
     const {configFile, destDir, destImagesDir, srcDir} = flags
 
