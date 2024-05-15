@@ -1,6 +1,8 @@
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 
+import logger from './logger.js'
+
 /**
  * This function copies all files and directories from the source directory to the destination directory.
  *
@@ -51,7 +53,8 @@ const getFilePaths = async (dirPath: string): Promise<string[]> => {
  * @returns {void}
  */
 const copyFiles = async (filePaths: string[], srcDir: string, destDir: string) => {
-  console.log('Starting to copy image files...')
+  logger.bold('Copy Images:')
+  logger.info('Starting to copy image files...')
 
   // For each file path, copy the file to the target directory
   for (const file of filePaths) {
@@ -64,5 +67,5 @@ const copyFiles = async (filePaths: string[], srcDir: string, destDir: string) =
     fs.copyFileSync(file, targetPath)
   }
 
-  console.log('Copying of Markdown files is complete.')
+  logger.success('Copying of Markdown files is complete.')
 }

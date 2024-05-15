@@ -3,6 +3,7 @@ import * as fs from 'node:fs'
 import * as path from 'node:path'
 
 import {readConfigFile} from './config.js'
+import logger from './logger.js'
 
 /* eslint @typescript-eslint/no-explicit-any: 0 */
 export type Config = {[key: string]: any}
@@ -15,7 +16,8 @@ export type Config = {[key: string]: any}
  * @param {string} [configFile] - The optional configuration file for frontmatter.
  */
 export const copyMarkdownFiles = async (srcDir: string, destDir: string, configFile?: string) => {
-  console.log('Starting to copy Markdown files...')
+  logger.bold('Copy Markdown:')
+  logger.info('Starting to copy Markdown files...')
 
   // Read all files in the source directory
   const files = fs.readdirSync(srcDir)
@@ -31,7 +33,7 @@ export const copyMarkdownFiles = async (srcDir: string, destDir: string, configF
     copyMarkdownFile(srcDir, destDir, file, frontmatterConfig)
   }
 
-  console.log('Copying of Markdown files is complete.')
+  logger.success('Copying of Markdown files is complete.')
 }
 
 /**
@@ -70,7 +72,7 @@ const copyMarkdownFile = (srcDir: string, destDir: string, file: string, frontma
 
   // Check if the file has a title in its frontmatter
   if (!mergedData.title) {
-    console.warn(`No title found in the frontmatter of ${file}`)
+    logger.warn(`No title found in the frontmatter of ${file}`)
     return
   }
 

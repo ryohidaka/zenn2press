@@ -1,7 +1,9 @@
 import {Command, Flags} from '@oclif/core'
+import chalk from 'chalk'
 
 import {DESCRIPTION} from './constants.js'
 import {copyImages} from './utils/image.js'
+import logger from './utils/logger.js'
 import {copyMarkdownFiles} from './utils/markdown.js'
 
 /**
@@ -25,6 +27,34 @@ export class Zenn2Press extends Command {
     srcDir: Flags.string({char: 's', description: 'Path of the root directory of Zenn content.', required: true}),
   }
 
+  /**
+   * Output properties to the console
+   * @param srcArticlesDir
+   * @param srcImagesDir
+   * @param flags
+   *
+   * @returns {void}
+   */
+  logProperties(
+    srcArticlesDir: string,
+    srcImagesDir: string,
+    destArticlesDir: string,
+    destImagesDir: string,
+    configFile?: string,
+  ): void {
+    logger.bold('Property:')
+    logger.bold('  Source:')
+    logger.info(`    - Articles: ${chalk.cyanBright(srcArticlesDir)}`)
+    logger.info(`    - Image: ${chalk.cyanBright(srcImagesDir)}`)
+    logger.info('\n')
+    logger.bold('  Destination:')
+    logger.info(`    - Articles: ${chalk.cyanBright(destArticlesDir)}`)
+    logger.info(`    - Image: ${chalk.cyanBright(destImagesDir)}`)
+    logger.info('\n')
+    logger.info(`  Config: ${chalk.cyanBright(configFile ?? 'None')}`)
+    logger.info('\n')
+  }
+
   // The run method is the entry point of the command
   async run(): Promise<void> {
     const {flags} = await this.parse(Zenn2Press)
@@ -34,24 +64,18 @@ export class Zenn2Press extends Command {
     const destArticlesDir = destDir
     const srcImagesDir = `${srcDir}/images`
 
-    console.log(`
-Property
-
-  Source:
-    - Articles: ${srcArticlesDir}
-    - Images: ${srcImagesDir}
-
-  Output:
-    - Articles: ${destArticlesDir}
-    - Images: ${destImagesDir}
-
-  Config: ${configFile ?? 'None'}
-    `)
+    // Output properties to the console
+    this.logProperties(srcArticlesDir, srcImagesDir, destArticlesDir, destImagesDir, configFile)
 
     // Copy markdown files from srcDir to destDir after conversion
-    await copyMarkdownFiles(srcArticlesDir, destArticlesDir)
+    await copyMarkdownFiles(srcArticlesDir, destArticlesDir, configFile)
+
+    logger.info('\n')
 
     // Copy images from srcDir to destDir
     await copyImages(srcImagesDir, destImagesDir)
+
+    logger.info('\n')
+    logger.success(`Completed`)
   }
 }
