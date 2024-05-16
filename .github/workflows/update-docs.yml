@@ -24,12 +24,17 @@ jobs:
       - name: Generate Docs
         run: npm run docs
 
+      - name: Generate oclif README
+        run: |
+          npm run build
+          npm exec oclif readme
+
       - name: Check for changes
         id: changes
         run: |
           git fetch
           git pull
-          git add docs
+          git add docs README.md
           git diff --cached --quiet || echo "changed=true" >> $GITHUB_OUTPUT
 
       - name: Commit files
