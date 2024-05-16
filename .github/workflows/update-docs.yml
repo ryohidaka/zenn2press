@@ -27,6 +27,8 @@ jobs:
       - name: Check for changes
         id: changes
         run: |
+          git fetch
+          git pull
           git add docs
           git diff --cached --quiet || echo "changed=true" >> $GITHUB_OUTPUT
 
