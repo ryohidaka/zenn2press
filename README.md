@@ -7,10 +7,9 @@
 Convert Zenn content format to VitePress.
 
 <!-- toc -->
-
-- [zenn2press](#zenn2press)
-- [Usage](#usage)
-- [Commands](#commands)
+* [zenn2press](#zenn2press)
+* [Usage](#usage)
+* [Commands](#commands)
 <!-- tocstop -->
 
 ## Installation
@@ -24,26 +23,23 @@ npm install zenn2press
 # Usage
 
 <!-- usage -->
-
 ```sh-session
 $ npm install -g zenn2press
 $ zenn2press COMMAND
 running command...
 $ zenn2press (--version)
-zenn2press/0.0.0 darwin-x64 node-v20.9.0
+zenn2press/0.0.0 linux-x64 node-v20.13.1
 $ zenn2press --help [COMMAND]
 USAGE
   $ zenn2press COMMAND
 ...
 ```
-
 <!-- usagestop -->
 
 # Commands
 
 <!-- commands -->
-
-- [`zenn2press [COMMAND]`](#zenn2press-command)
+* [`zenn2press [COMMAND]`](#zenn2press-command)
 
 ## `zenn2press [COMMAND]`
 
@@ -62,7 +58,6 @@ FLAGS
 DESCRIPTION
   Display help for zenn2press.
 ```
-
 <!-- commandsstop -->
 
 ## License
