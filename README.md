@@ -30,7 +30,7 @@ $ npm install -g zenn2press
 $ zenn2press COMMAND
 running command...
 $ zenn2press (--version)
-zenn2press/0.0.0 linux-x64 node-v18.20.2
+zenn2press/0.0.0 darwin-x64 node-v20.9.0
 $ zenn2press --help [COMMAND]
 USAGE
   $ zenn2press COMMAND
@@ -43,22 +43,24 @@ USAGE
 
 <!-- commands -->
 
-- [`zenn2press`](#zenn2press)
+- [`zenn2press [COMMAND]`](#zenn2press-command)
 
-## `zenn2press`
+## `zenn2press [COMMAND]`
 
-Update installed plugins.
+Display help for zenn2press.
 
 ```
 USAGE
-  $ zenn2press  [-h] [-v]
+  $ zenn2press  [COMMAND...] [-n]
+
+ARGUMENTS
+  COMMAND...  Command to show help for.
 
 FLAGS
-  -h, --help     Show CLI help.
-  -v, --verbose
+  -n, --nested-commands  Include all nested commands in the output.
 
 DESCRIPTION
-  Update installed plugins.
+  Display help for zenn2press.
 ```
 
 <!-- commandsstop -->
