@@ -39,6 +39,7 @@ jobs:
         id: oclif-readme
         run: |
           npm install
+          npm run build
           npm exec oclif readme
           npm run format
           if [ -n "$(git status --porcelain)" ]; then
