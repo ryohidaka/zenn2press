@@ -28,7 +28,7 @@ $ npm install -g zenn2press
 $ zenn2press COMMAND
 running command...
 $ zenn2press (--version)
-zenn2press/0.0.0 linux-x64 node-v20.13.1
+zenn2press/0.1.0 linux-x64 node-v20.13.1
 $ zenn2press --help [COMMAND]
 USAGE
   $ zenn2press COMMAND
