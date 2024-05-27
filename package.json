@@ -1,7 +1,7 @@
 {
   "name": "zenn2press",
   "description": "Convert Zenn content format to VitePress.",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "ryohidaka <39184410+ryohidaka@users.noreply.github.com>",
   "bin": {
     "zenn2press": "./bin/run.js"
