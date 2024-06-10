@@ -8,7 +8,7 @@
   },
   "bugs": "https://github.com/ryohidaka/zenn2press/issues",
   "dependencies": {
-    "@oclif/core": "^3",
+    "@oclif/core": "^4",
     "@oclif/plugin-help": "^6",
     "chalk": "^5.3.0",
     "cli-progress": "^3.12.0",
@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@oclif/prettier-config": "^0.2.1",
-    "@oclif/test": "^3",
+    "@oclif/test": "^4",
     "@types/chai": "^4",
     "@types/figlet": "^1.5.8",
     "@types/mocha": "^10",
